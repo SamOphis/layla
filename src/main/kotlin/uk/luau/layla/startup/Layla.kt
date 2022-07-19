@@ -5,7 +5,7 @@ import dev.kord.gateway.Intent
 import dev.kord.gateway.PrivilegedIntent
 
 suspend fun main() {
-    val kord = Kord(System.getenv("LILY_TOKEN"))
+    val kord = Kord(System.getenv("LAYLA_TOKEN"))
 
     kord.login {
         @OptIn(PrivilegedIntent::class)
