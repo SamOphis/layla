@@ -19,4 +19,4 @@ lazy to do manually while also serving as a way for me to maintain my [Kotlin](h
 > Further steps will be necessary in the future. I'll update this section along with them.
 
 # Contributing
-See the [contribution guide](https://github.com/SamOphis/blob/main/CONTRIBUTING.md).
+See the [contribution guide](https://github.com/SamOphis/layla/blob/main/CONTRIBUTING.md).
