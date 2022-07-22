@@ -11,13 +11,14 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
-    implementation("dev.kord:kord-core:0.8.0-M15")
-    implementation("ch.qos.logback:logback-classic:1.3.0-alpha16")
+    implementation(kotlin("stdlib")) // Kotlin stdlib.
+    implementation("dev.kord:kord-core:0.8.0-M15") // Discord API client
+    implementation("ch.qos.logback:logback-classic:1.3.0-alpha16") // SLF4J frontend
+    implementation("io.insert-koin:koin-core:3.2.0") // Dependency injection framework.
 }
 
 application {
-    mainClass.set("uk.luau.layla.startup.LaylaKt")
+    mainClass.set("uk.luau.layla.startup.MainKt")
 }
 
 val compileKotlin: KotlinCompile by tasks
