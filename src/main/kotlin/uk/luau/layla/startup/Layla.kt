@@ -7,7 +7,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class Layla : KoinComponent {
-    private val kord by inject<Kord>()
+    val kord by inject<Kord>()
 
     suspend fun start() {
         kord.login {
