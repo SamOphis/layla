@@ -9,7 +9,7 @@ import org.koin.core.component.inject
 import uk.luau.layla.startup.Layla
 
 class CommandService : KoinComponent {
-    private val commandMap by inject<MutableMap<String, Command>>()
+    private val commandMap by inject<MutableMap<String, CommandModule>>()
     private val layla by inject<Layla>()
 
     fun setupEventHandlers() {
@@ -22,21 +22,18 @@ class CommandService : KoinComponent {
         }
     }
 
-    suspend fun command(name: String, description: String, setup: ChatInputCreateBuilder.() -> Unit = {},
-                        execute: suspend GuildChatInputCommandInteractionCreateEvent.() -> Unit = {}) {
-
-        layla.kord.createGlobalChatInputCommand(name, description, setup)
-
-        commandMap[name] = object : Command(name, description, setup) {
-            override suspend fun executeAsGuild(context: GuildChatInputCommandInteractionCreateEvent) = execute(context)
-        }
+    suspend fun registerCommand(command: CommandModule) {
+        layla.kord.createGlobalChatInputCommand(command.name, command.description) { command.setup(this) }
+        commandMap[command.name] = command
     }
 }
 
-@Suppress("unused") // Just to stop getting bothered about name/description not being referenced yet. ;w;
-open class Command(val name: String, val description: String,
-                   private val builder: ChatInputCreateBuilder.() -> Unit = {}) {
+abstract class CommandModule : KoinComponent {
+    abstract val name: String
+    abstract val description: String
 
+    open fun setup(builder: ChatInputCreateBuilder) {}
     open suspend fun execute(context: ChatInputCommandInteractionCreateEvent) {}
     open suspend fun executeAsGuild(context: GuildChatInputCommandInteractionCreateEvent) { execute(context) }
+    open suspend fun register() = CommandService().registerCommand(this)
 }
